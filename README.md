@@ -123,7 +123,7 @@ The install generator adds some options to the end of your Devise config file (c
 ## Thanks
 
 This extension is a hodgepodge of
-[devise-otp](https://github.com/wmlele/devise-otp) which was forked from [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), and a large collection of outstanding pull requests on both libraries.  The changes contained within are a bit too aggressive for existing users, therefore this extension will forge it's own path.
+[devise-otp](https://github.com/wmlele/devise-otp) which was forked from [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), in conjunction with outstanding pull requests from both libraries.  The changes contained within are a bit too aggressive for existing users, therefore this extension will forge it's own path.
 
 ## License
 
