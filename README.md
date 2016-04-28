@@ -2,14 +2,15 @@
 [![Build Status](https://travis-ci.org/williamatodd/devise-2fa.png?branch=master)](https://travis-ci.org/williamatodd/devise-2fa)
 
 Devise TwoFactor implements two-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
-* It uses the [rotp library](https://github.com/mdp/rotp) for generation and verification of codes.
-* It uses the [RQRCode library](https://github.com/whomwah/rqrcode) to generate QR Code PNG's.
+* Uses [rotp library](https://github.com/mdp/rotp) for the generation and verification of codes.
+* Uses [RQRCode](https://github.com/whomwah/rqrcode) to generate QR Code PNGs.
+* Uses [SymmetricEncryption](https://github.com/rocketjob/symmetric-encryption) to generate QR Code PNGs.
 
 It currently has the following features:
 
 * Url based provisioning of token devices, compatible with multiple applications.
-* Browsers can be set as 'trusted' for a limited time. During that time no OTP challenge is asked again when logging from that browser (but normal login will).
-* Two factors authentication can be **optional** at user discretion, **recommended** (it nags the user on every sign-in) or **mandatory** (users must enroll OTP after signing-in next time, before they can navigate the site). The settings is global, or per-user. ( **incomplete**, see below)
+* Browsers can be designated as 'trusted' for a limited time.
+* Two-factor authentication can be **optional** at user discretion or **mandatory** (users must enroll OTP after signing-in next time, before they can navigate the site).
 * Optionally, users can obtain a list of HOTP recovery tokens to be used for emergency log-in in case the token device is lost or unavailable.
 
 Compatible token devices are:
@@ -20,19 +21,18 @@ Compatible token devices are:
 
 ## Quick overview of Two Factors Authentication, using OTPs.
 
-* A shared secret is generated on the server, and stored both on the token device (ie: the phone) and the server itself.
+* A shared secret is generated on the server, and stored both on the token device (eg: the phone) and the server itself.
 * The secret is used to generate short numerical tokens that are either time or sequence based.
 * Tokens can be generated on a phone without internet connectivity.
 * The token provides an additional layer of security against password theft.
 * OTP's should always be used as a second factor of authentication(if your phone is lost, you account is still secured with a password)
-* Google Authenticator allows you to store multiple OTP secrets and provision those using a QR Code
 
 Although there's an adjustable drift window, it is important that both the server and the token device (phone) have their clocks set (eg: using NTP).
 
 
 ## Installation
 
-Setup the symmetric-encryption gem by following the steps on the (configuration page)[https://reidmorrison.github.io/symmetric-encryption/configuration.html]
+Setup the symmetric-encryption gem by following the steps on the (configuration page)[http://rocketjob.github.io/symmetric-encryption/configuration.html]
 
 Add this line to your application's Gemfile:
 
