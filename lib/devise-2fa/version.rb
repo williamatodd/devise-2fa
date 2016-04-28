@@ -1,5 +1,5 @@
 module Devise
   module TwoFactor
-    VERSION = '0.9.9'.freeze
+    VERSION = '0.1.0'.freeze
   end
 end
