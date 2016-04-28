@@ -8,7 +8,7 @@ module DeviseTwoFactorable
   end
 end
 
-require 'devise-two_factor/version'
+require 'devise-2fa/version'
 require 'active_support'
 require 'active_support/core_ext'
 require 'active_support/core_ext/integer'
