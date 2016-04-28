@@ -1,5 +1,5 @@
 # Devise::TwoFactor
-[![Build Status](https://travis-ci.org/williamatodd/devise-2fa.png?branch=master)](https://travis-ci.org/williamatodd/devise-2fa)
+[![Build Status](https://travis-ci.org/williamatodd/devise-2fa.png?branch=master)](https://travis-ci.org/williamatodd/devise-2fa) [![Gem Version](https://badge.fury.io/rb/devise-2fa.svg)](https://badge.fury.io/rb/devise-2fa)
 
 Devise TwoFactor implements two-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
 * Uses [rotp](https://github.com/mdp/rotp) for the generation and verification of codes.

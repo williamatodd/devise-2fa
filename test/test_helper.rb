@@ -1,18 +1,26 @@
 ENV['RAILS_ENV'] = 'test'
 DEVISE_ORM = (ENV['DEVISE_ORM'] || :active_record).to_sym
 
-$LOAD_PATH.unshift File.dirname(__FILE__)
+$:.unshift File.dirname(__FILE__)
 puts "\n==> Devise.orm = #{DEVISE_ORM.inspect}"
 require 'dummy/config/environment'
-require "orm/#{DEVISE_ORM}"
 require 'rails/test_help'
+require "orm/#{DEVISE_ORM}"
 require 'capybara/rails'
 require 'minitest/reporters'
 
-I18n.load_path << File.expand_path("../support/locale/en.yml", __FILE__) if DEVISE_ORM == :mongoid
-
 MiniTest::Reporters.use!
+
+ActionMailer::Base.delivery_method = :test
+ActionMailer::Base.perform_deliveries = true
+ActionMailer::Base.default_url_options[:host] = 'test.com'
+
+ActiveSupport::Deprecation.silenced = true
+$VERBOSE = false
 
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
+end
+class ActionController::TestCase
+  include Devise::TestHelpers
 end
