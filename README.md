@@ -4,7 +4,7 @@
 Devise TwoFactor implements two-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
 * Uses [rotp](https://github.com/mdp/rotp) for the generation and verification of codes.
 * Uses [RQRCode](https://github.com/whomwah/rqrcode) to generate QR Code PNGs.
-* Uses [SymmetricEncryption](https://github.com/rocketjob/symmetric-encryption) to generate QR Code PNGs.
+* Uses [SymmetricEncryption](https://github.com/rocketjob/symmetric-encryption) to encrypt secrets and recovery codes.
 
 It currently has the following features:
 
