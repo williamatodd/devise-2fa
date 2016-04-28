@@ -60,9 +60,9 @@ Setup the User or Admin model
 
     rails g devise MODEL
 
-Configure your app for authorization, edit your Controller and add this before_filter:
+Configure your app for authorization, edit your Controller and add this before_action:
 
-    before_filter :authenticate_user!
+    before_action :authenticate_user!
 
 Make sure your "root" route is configured in config/routes.rb
 
@@ -86,7 +86,7 @@ Add the gem's javascript to you application.js
 
 ### Custom Views
 
-If you want to customise your views (which you likely will want to), you can use the generator:
+If you want to customize your views (which you likely will want to), you can use the generator:
 
     rails g devise_2fa:views
 
@@ -97,7 +97,7 @@ The install generator also installs an english copy of a Devise 2FA i18n file. T
 
 ## Usage
 
-With this extension enabled, the following is expected behaviour:
+With this extension enabled, the following is expected behavior:
 
 * Users may go to _/MODEL/token_ and enable their OTP state, they might be asked to provide their password again (and OTP token, if it's enabled)
 * Once enabled they're shown an alphanumeric code (for manual provisioning) and a QR code, for automatic provisioning of their authentication device (for instance, Google Authenticator)

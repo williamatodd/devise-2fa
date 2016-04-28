@@ -26,7 +26,7 @@ class ActionDispatch::IntegrationTest
   def enable_otp_and_sign_in
     user = create_full_user
     sign_user_in(user)
-    visit user_otp_token_path
+    visit user_token_path
     check 'user_otp_enabled'
     click_button 'Continue...'
 
@@ -42,7 +42,7 @@ class ActionDispatch::IntegrationTest
   end
 
   def disable_otp
-    visit user_otp_token_path
+    visit user_token_path
     uncheck 'user_otp_enabled'
     click_button 'Continue...'
   end

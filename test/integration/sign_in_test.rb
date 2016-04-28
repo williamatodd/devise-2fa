@@ -20,13 +20,13 @@ class SignInTest < ActionDispatch::IntegrationTest
   test 'a new user, just signed in, should be able to sign in and enable their OTP authentication' do
     user = sign_user_in
 
-    visit user_otp_token_path
+    visit user_token_path
     assert !page.has_content?('Your token secret')
 
     check 'user_otp_enabled'
     click_button 'Continue...'
 
-    assert_equal user_otp_token_path, current_path
+    assert_equal user_token_path, current_path
 
     assert page.has_content?('Your token secret')
     assert !user.otp_auth_secret.nil?
@@ -36,12 +36,12 @@ class SignInTest < ActionDispatch::IntegrationTest
   test 'a new user should be able to sign in enable OTP and be prompted for their token' do
     enable_otp_and_sign_in
 
-    assert_equal user_otp_credential_path, current_path
+    assert_equal user_credential_path, current_path
   end
 
   test 'fail token authentication' do
     enable_otp_and_sign_in
-    assert_equal user_otp_credential_path, current_path
+    assert_equal user_credential_path, current_path
 
     fill_in 'user_token', with: '123456'
     click_button 'Submit Token'
@@ -51,12 +51,12 @@ class SignInTest < ActionDispatch::IntegrationTest
 
   test 'fail blank token authentication' do
     enable_otp_and_sign_in
-    assert_equal user_otp_credential_path, current_path
+    assert_equal user_credential_path, current_path
 
     fill_in 'user_token', with: ''
     click_button 'Submit Token'
 
-    assert_equal user_otp_credential_path, current_path
+    assert_equal user_credential_path, current_path
   end
 
   test 'successful token authentication' do

@@ -17,13 +17,13 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     user = enable_otp_and_sign_in
     otp_challenge_for user
 
-    visit user_otp_token_path
-    assert_equal user_otp_token_path, current_path
+    visit user_token_path
+    assert_equal user_token_path, current_path
 
     sign_out
     sign_user_in
 
-    assert_equal user_otp_credential_path, current_path
+    assert_equal user_credential_path, current_path
   end
 
   test 'a user should be able to set their browser as trusted' do
@@ -31,8 +31,8 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     user = enable_otp_and_sign_in
     otp_challenge_for user
 
-    visit user_otp_token_path
-    assert_equal user_otp_token_path, current_path
+    visit user_token_path
+    assert_equal user_token_path, current_path
 
     click_link('Trust this browser')
     assert_text 'Your browser is trusted.'
@@ -48,8 +48,8 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     user = enable_otp_and_sign_in
     otp_challenge_for user
 
-    visit user_otp_token_path
-    assert_equal user_otp_token_path, current_path
+    visit user_token_path
+    assert_equal user_token_path, current_path
 
     click_link('Trust this browser')
     assert_text 'Your browser is trusted.'
@@ -58,6 +58,6 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     sleep User.otp_trust_persistence.to_i + 1
     sign_user_in
 
-    assert_equal user_otp_credential_path, current_path
+    assert_equal user_credential_path, current_path
   end
 end
