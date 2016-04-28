@@ -1,0 +1,19 @@
+<h2><%= I18n.t('title', {scope: 'devise.2fa.tokens'}) %></h2>
+<p><%= I18n.t('explain', {scope: 'devise.2fa.tokens'}) %></p>
+
+<%= form_for(resource, as: resource_name, url: [resource_name, :token], html: { method: :put }) do |f| %>
+
+	<%= devise_error_messages! %>
+
+	<h3><%= I18n.t('enable_request', {scope: 'devise.2fa.tokens'}) %></h3>
+
+	<p><%= f.label :otp_enabled, I18n.t('status', {scope: 'devise.2fa.tokens'}) %><br />
+	<%= f.check_box :otp_enabled %></p>
+
+	<p><%= f.submit I18n.t('submit', {scope: 'devise.2fa.tokens'}) %></p>
+<% end %>
+
+<%- if resource.otp_enabled? %>
+  <%= render partial: 'token_secret' if resource.otp_enabled? %>
+  <%= render partial: 'trusted_devices' if trusted_devices_enabled? %>
+<% end %>
