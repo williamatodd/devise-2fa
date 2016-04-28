@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/williamatodd/devise-2fa.png?branch=master)](https://travis-ci.org/williamatodd/devise-2fa)
 
 Devise TwoFactor implements two-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
-* Uses [rotp library](https://github.com/mdp/rotp) for the generation and verification of codes.
+* Uses [rotp](https://github.com/mdp/rotp) for the generation and verification of codes.
 * Uses [RQRCode](https://github.com/whomwah/rqrcode) to generate QR Code PNGs.
 * Uses [SymmetricEncryption](https://github.com/rocketjob/symmetric-encryption) to generate QR Code PNGs.
 
@@ -18,17 +18,6 @@ Compatible token devices are:
 * [1Password](https://1password.com/)
 * [Google Authenticator](https://code.google.com/p/google-authenticator/)
 * [FreeOTP](https://fedorahosted.org/freeotp/)
-
-## Quick overview of Two Factors Authentication, using OTPs.
-
-* A shared secret is generated on the server, and stored both on the token device (eg: the phone) and the server itself.
-* The secret is used to generate short numerical tokens that are either time or sequence based.
-* Tokens can be generated on a phone without internet connectivity.
-* The token provides an additional layer of security against password theft.
-* OTP's should always be used as a second factor of authentication(if your phone is lost, you account is still secured with a password)
-
-Although there's an adjustable drift window, it is important that both the server and the token device (phone) have their clocks set (eg: using NTP).
-
 
 ## Installation
 
@@ -98,6 +87,7 @@ With this extension enabled, the following is expected behavior:
 * Users may go to _/MODEL/token_ and enable their OTP state, they might be asked to provide their password again (and OTP token, if it's enabled)
 * Once enabled they're shown an alphanumeric code (for manual provisioning) and a QR code, for automatic provisioning of their authentication device (for instance, Google Authenticator)
 * If config.otp_mandatory or model_instance.otp_mandatory, users will be required to enable, and provision, next time they successfully sign-in.
+* Although there's an adjustable drift window, it is important that both the server and the token device (phone) have their clocks set (eg: using NTP).
 
 
 ### Configuration Options
