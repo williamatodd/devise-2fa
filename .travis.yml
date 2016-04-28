@@ -26,5 +26,3 @@ matrix:
     - rvm: 2.3.0
       gemfile: gemfiles/Gemfile.rails-master
       env: DEVISE_ORM=mongoid
-  allow_failures:
-    - gemfile: gemfiles/Gemfile.rails-master
