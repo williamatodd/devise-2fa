@@ -118,3 +118,5 @@ This extension is a hodgepodge of
 ## License
 
 MIT Licensed
+
+Copyright © 2015-2016 William A. Todd
