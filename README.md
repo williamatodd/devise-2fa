@@ -1,11 +1,9 @@
-# Devise::2fa
+# Devise::TwoFactor
 [![Build Status](https://travis-ci.org/williamatodd/devise-2fa.png?branch=master)](https://travis-ci.org/williamatodd/devise-2fa)
 
-Devise 2FA implements two-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
+Devise TwoFactor implements two-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
 * It uses the [rotp library](https://github.com/mdp/rotp) for generation and verification of codes.
 * It uses the [RQRCode library](https://github.com/whomwah/rqrcode) to generate QR Code PNG's.
-
-**If you are upgrading from version 0.1.x, you will need to regenerate your views.**
 
 It currently has the following features:
 
@@ -33,6 +31,8 @@ Although there's an adjustable drift window, it is important that both the serve
 
 
 ## Installation
+
+Setup the symmetric-encryption gem by following the steps on the (configuration page)[https://reidmorrison.github.io/symmetric-encryption/configuration.html]
 
 Add this line to your application's Gemfile:
 
@@ -70,29 +70,25 @@ Make sure your "root" route is configured in config/routes.rb
 
 Run the following generator to add the necessary configuration options to Devise's config file:
 
-    rails g devise_2fa:install
+    rails g devise_two_factor:install
 
-After you've created your Devise user models (which is usually done with a "rails g devise MODEL"), set up your Devise 2FA additions:
+After you've created your Devise user models (which is usually done with a "rails g devise MODEL"), set up your Devise TwoFactor additions:
 
-    rails g devise_2fa MODEL
+    rails g devise_two_factor MODEL
 
 Don't forget to migrate:
 
     rake db:migrate
 
-Add the gem's javascript to you application.js
-
-    //= require devise-2fa
-
 ### Custom Views
 
 If you want to customize your views (which you likely will want to), you can use the generator:
 
-    rails g devise_2fa:views
+    rails g devise_two_factor:views
 
 ### I18n
 
-The install generator also installs an english copy of a Devise 2FA i18n file. This can be modified (or used to create other language versions) and is located at: _config/locales/devise.2fa.en.yml_
+The install generator also installs an english copy of a Devise TwoFactor i18n file. This can be modified (or used to create other language versions) and is located at: _config/locales/devise.two_factor.en.yml_
 
 
 ## Usage
@@ -127,7 +123,7 @@ The install generator adds some options to the end of your Devise config file (c
 ## Thanks
 
 This extension is a hodgepodge of
-[devise-otp](https://github.com/wmlele/devise-otp) which was forked from [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), and a large collection of outstanding pull requests on both libraries.
+[devise-otp](https://github.com/wmlele/devise-otp) which was forked from [devise_google_authenticator](https://github.com/AsteriskLabs/devise_google_authenticator), and a large collection of outstanding pull requests on both libraries.  The changes contained within are a bit too aggressive for existing users, therefore this extension will forge it's own path.
 
 ## License
 

@@ -5,7 +5,7 @@ require 'devise-2fa/version'
 
 Gem::Specification.new do |gem|
   gem.name          = 'devise-2fa'
-  gem.version       = Devise::2fa::VERSION
+  gem.version       = Devise::TwoFactor::VERSION
   gem.authors       = ['William A. Todd']
   gem.email         = ['info@investinwaffles.com']
   gem.description   = 'Time Based OTP/rfc6238 authentication for Devise'
@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'devise', '>= 3.2.0'
   gem.add_runtime_dependency 'rotp', '>= 3.0'
   gem.add_runtime_dependency 'rqrcode', '~> 0.10.1'
+  gem.add_runtime_dependency 'symmetric-encryption', '>= 3.8'
 
   gem.add_development_dependency 'sqlite3'
 end

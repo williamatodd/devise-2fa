@@ -1,15 +1,15 @@
-module Devise2fa
+module DeviseTwoFactor
   module Generators # :nodoc:
     # Install Generator
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path('../../templates', __FILE__)
 
-      desc 'Install the Devise 2FA authentication extension'
+      desc 'Install the Devise two-factor authentication extension'
 
       def add_configs
         content = <<-CONTENT
 
-  # ==> Devise 2FA Extension
+  # ==> Devise TwoFactor Extension
   # Configure OTP extension for devise
 
   # OTP is mandatory, users are going to be asked to
@@ -45,7 +45,7 @@ CONTENT
       end
 
       def copy_locale
-        copy_file '../../../config/locales/en.yml', 'config/locales/devise.2fa.en.yml'
+        copy_file '../../../config/locales/en.yml', 'config/locales/devise.two_factor.en.yml'
       end
     end
   end

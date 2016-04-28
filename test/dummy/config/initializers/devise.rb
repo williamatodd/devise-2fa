@@ -240,7 +240,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = "/my_engine/users/auth"
 
-  # ==> Devise 2FA Extension
+  # ==> Devise TwoFactor Extension
   # Configure extension for devise
 
   # How long should the user have to enter their token. To change the default, uncomment and change the below:

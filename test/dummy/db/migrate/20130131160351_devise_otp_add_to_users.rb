@@ -1,4 +1,4 @@
-class Devise2faAddToUsers < ActiveRecord::Migration
+class DeviseTwoFactorAddToUsers < ActiveRecord::Migration
   def self.up
     change_table :users do |t|
       t.string    :otp_auth_secret

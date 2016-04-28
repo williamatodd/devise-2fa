@@ -1,6 +1,6 @@
 en:
   devise:
-    otp:
+    two_factor:
       submit_token:
         title: 'Check Token'
         explain: "A token is required because two-factor authentication is enabled on your account"

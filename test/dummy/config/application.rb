@@ -18,7 +18,7 @@ end
 PARENT_MODEL_CLASS = DEVISE_ORM == :active_record ? ActiveRecord::Base : Object
 
 require 'devise'
-require 'devise-2fa'
+require 'devise-two_factor'
 
 module Dummy
   class Application < Rails::Application

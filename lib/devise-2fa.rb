@@ -8,7 +8,7 @@ module DeviseTwoFactorable
   end
 end
 
-require 'devise-2fa/version'
+require 'devise-two_factor/version'
 require 'active_support'
 require 'active_support/core_ext'
 require 'active_support/core_ext/integer'
@@ -65,7 +65,7 @@ module Devise
   mattr_accessor :otp_issuer
   @@otp_issuer = Rails.application.class.parent_name
 
-  module 2fa
+  module TwoFactor
   end
 end
 

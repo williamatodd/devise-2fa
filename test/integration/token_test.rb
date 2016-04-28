@@ -11,7 +11,7 @@ class TokenTest < ActionDispatch::IntegrationTest
     user = enable_otp_and_sign_in
     assert_equal user_credential_path, current_path
 
-    # otp 2fa
+    # otp two_factor
     fill_in 'user_token', with: ROTP::TOTP.new(user.otp_auth_secret).at(Time.now)
     click_button 'Submit Token'
     assert_equal root_path, current_path

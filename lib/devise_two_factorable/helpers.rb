@@ -14,7 +14,7 @@ module DeviseTwoFactorable
       # the otp controller
       #
       def otp_set_flash_message(key, kind, options = {})
-        options[:scope] ||= "devise.2fa.#{controller_name}"
+        options[:scope] ||= "devise.two_factor.#{controller_name}"
         options[:default] = Array(options[:default]).unshift(kind.to_sym)
         options[:resource_name] = resource_name
         options = devise_i18n_options(options) if respond_to?(:devise_i18n_options, true)
