@@ -11,14 +11,14 @@ Gem::Specification.new do |gem|
   gem.description   = 'Time Based OTP/rfc6238 authentication for Devise'
   gem.summary       = 'Includes ActiveRecord and Mongoid ORM support'
   gem.homepage      = 'http://www.github.com/williamatodd/devise-2fa'
-  gem.license      = 'MIT'
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
-  gem.add_runtime_dependency 'devise', '~> 3.2', '>= 3.2.0'
+  gem.add_runtime_dependency 'devise', '~> 4.0'
   gem.add_runtime_dependency 'rotp', '~> 3.0'
   gem.add_runtime_dependency 'rqrcode', '~> 0.10.1'
   gem.add_runtime_dependency 'symmetric-encryption', '~> 3.8'
