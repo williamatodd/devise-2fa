@@ -17,6 +17,8 @@ group :test do
   gem 'activerecord', '~> 4.2.6'
   gem 'mongo'
 
+  gem 'rspec'
+
   gem 'capybara'
   gem 'shoulda'
   gem 'selenium-webdriver'
