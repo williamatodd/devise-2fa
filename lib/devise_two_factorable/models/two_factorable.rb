@@ -7,7 +7,7 @@ module Devise::Models
     included do
       before_validation :generate_otp_auth_secret, on: :create
       before_validation :generate_otp_persistence_seed, on: :create
-      scope :with_valid_otp_challenge, ->{ where(:otp_challenge_expires.gt => Time.current) }
+      scope :with_valid_otp_challenge, ->{ where(User.arel_table[:otp_challenge_expires].gt(Time.current)) }
     end
 
     module ClassMethods
