@@ -18,11 +18,11 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     otp_challenge_for user
 
     visit user_token_path
-    current_path.should eq user_token_path
+    expect(current_path).to eq user_token_path
     sign_out
     sign_user_in
 
-    current_path.should eq user_credential_path
+    expect(current_path).to eq user_credential_path
   end
 
   test 'a user should be able to set their browser as trusted' do
@@ -31,14 +31,14 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     otp_challenge_for user
 
     visit user_token_path
-    current_path.should eq user_token_path
+    expect(current_path).to eq user_token_path
     click_link('Trust this browser')
     assert_text 'Your browser is trusted.'
     sign_out
 
     sign_user_in
 
-    current_path.should eq root_path
+    expect(current_path).to eq root_path
   end
 
   test 'trusted status should expire' do
@@ -47,7 +47,7 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     otp_challenge_for user
 
     visit user_token_path
-    current_path.should eq user_token_path
+    expect(current_path).to eq user_token_path
     click_link('Trust this browser')
     assert_text 'Your browser is trusted.'
     sign_out
@@ -55,6 +55,6 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     sleep User.otp_trust_persistence.to_i + 1
     sign_user_in
 
-    current_path.should eq user_credential_path
+    expect(current_path).to eq user_credential_path
   end
 end

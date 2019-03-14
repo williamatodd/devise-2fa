@@ -14,7 +14,7 @@ class SignInTest < ActionDispatch::IntegrationTest
     fill_in 'user_password', with: '12345678'
     page.has_content?('Log in') ? click_button('Log in') : click_button('Sign in')
 
-    current_path.should eq root_path
+    expect(current_path).to eq root_path
   end
 
   test 'a new user, just signed in, should be able to sign in and enable their OTP authentication' do
@@ -25,7 +25,7 @@ class SignInTest < ActionDispatch::IntegrationTest
     check 'user_otp_enabled'
     click_button 'Continue...'
 
-    current_path.should eq user_token_path
+    expect(current_path).to eq user_token_path
     (page.has_content?('Your token secret')).should_not be_false
     user.otp_auth_secret.nil?.should_not be_true
     user.otp_persistence_seed.nil?.should_not be_true
@@ -34,25 +34,25 @@ class SignInTest < ActionDispatch::IntegrationTest
   test 'a new user should be able to sign in enable OTP and be prompted for their token' do
     enable_otp_and_sign_in
 
-    current_path.should eq user_credential_path
+    expect(current_path).to eq user_credential_path
   end
 
   test 'fail token authentication' do
     enable_otp_and_sign_in
-    current_path.should eq user_credential_path
+    expect(current_path).to eq user_credential_path
     fill_in 'user_token', with: '123456'
     click_button 'Submit Token'
 
-    current_path.should eq new_user_session_path
+    expect(current_path).to eq new_user_session_path
   end
 
   test 'fail blank token authentication' do
     enable_otp_and_sign_in
-    current_path.should eq user_credential_path
+    expect(current_path).to eq user_credential_path
     fill_in 'user_token', with: ''
     click_button 'Submit Token'
 
-    current_path.should eq user_credential_path
+    expect(current_path).to eq user_credential_path
   end
 
   test 'successful token authentication' do
@@ -61,7 +61,7 @@ class SignInTest < ActionDispatch::IntegrationTest
     fill_in 'user_token', with: ROTP::TOTP.new(user.otp_auth_secret).at(Time.now)
     click_button 'Submit Token'
 
-    current_path.should eq root_path
+    expect(current_path).to eq root_path
   end
 
   test 'should fail if the the challenge times out' do
@@ -76,6 +76,6 @@ class SignInTest < ActionDispatch::IntegrationTest
     click_button 'Submit Token'
 
     User.otp_authentication_timeout = old_timeout
-    current_path.should eq new_user_session_path
+    expect(current_path).to eq new_user_session_path
   end
 end
