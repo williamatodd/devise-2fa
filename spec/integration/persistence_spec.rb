@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'integration_tests_helper'
 
-class PersistenceTest < ActionDispatch::IntegrationTest
+RSpec.feature 'Persistence' do
   before(:each) do
     @old_persistence = User.otp_trust_persistence
     User.otp_trust_persistence = 3.seconds
@@ -12,7 +12,7 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     Capybara.reset_sessions!
   end
 
-  test 'a user should be requested the otp challenge every log in' do
+  it 'a user should be requested the otp challenge every log in' do
     # log in 1fa
     user = enable_otp_and_sign_in
     otp_challenge_for user
@@ -25,7 +25,7 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     expect(current_path).to eq user_credential_path
   end
 
-  test 'a user should be able to set their browser as trusted' do
+  it 'a user should be able to set their browser as trusted' do
     # log in 1fa
     user = enable_otp_and_sign_in
     otp_challenge_for user
@@ -33,7 +33,7 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     visit user_token_path
     expect(current_path).to eq user_token_path
     click_link('Trust this browser')
-    assert_text 'Your browser is trusted.'
+    expect(page.body).to have_content('Your browser is trusted.')
     sign_out
 
     sign_user_in
@@ -41,7 +41,7 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     expect(current_path).to eq root_path
   end
 
-  test 'trusted status should expire' do
+  it 'trusted status should expire' do
     # log in 1fa
     user = enable_otp_and_sign_in
     otp_challenge_for user
@@ -49,7 +49,7 @@ class PersistenceTest < ActionDispatch::IntegrationTest
     visit user_token_path
     expect(current_path).to eq user_token_path
     click_link('Trust this browser')
-    assert_text 'Your browser is trusted.'
+    expect(page.body).to have_content('Your browser is trusted.')
     sign_out
 
     sleep User.otp_trust_persistence.to_i + 1

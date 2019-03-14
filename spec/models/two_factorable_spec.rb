@@ -1,102 +1,103 @@
 require 'spec_helper'
 require 'model_tests_helper'
 
-class TwoFactorableTest < ActiveSupport::TestCase
+RSpec.describe TwoFactorableTest do
   before(:each) do
     new_user
   end
 
-  test 'new users have a non-nil secret set' do
-    User.first.otp_auth_secret.should_not be_nil
+  it 'new users have a non-nil secret set' do
+    expect(User.first.otp_auth_secret).to_not be_nil
   end
 
-  test 'new users have OTP disabled by default' do
-    User.first.otp_enabled.should_not be_true
+  it 'new users have OTP disabled by default' do
+    expect(User.first.otp_enabled).to_not be_true
   end
 
-  test 'users should have an instance of TOTP/ROTP objects' do
+  it 'users should have an instance of TOTP/ROTP objects' do
     u = User.first
-    (u.time_based_otp.is_a? ROTP::TOTP).should_not be_false
-    (u.recovery_otp.is_a? ROTP::HOTP).should_not be_false
+    expect(u.time_based_otp.is_a? ROTP::TOTP).to_not be_false
+    expect(u.recovery_otp.is_a? ROTP::HOTP).to_not be_false
   end
 
-  test 'users should have their otp_auth_secret/persistence_seed set on creation' do
-    User.first.otp_auth_secret.should_not be_false
-    User.first.otp_persistence_seed.should_not be_false
+  it 'users should have their otp_auth_secret/persistence_seed set on creation' do
+    expect(User.first.otp_auth_secret).to_not be_false
+    expect(User.first.otp_persistence_seed).to_not be_false
   end
 
-  test 'reset_otp_credentials should generate new secrets and disable OTP' do
+  it 'reset_otp_credentials should generate new secrets and disable OTP' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
-    u.otp_enabled.should_not be_false
+    expect(u.otp_enabled).to_not be_false
     otp_auth_secret = u.otp_auth_secret
     otp_persistence_seed = u.otp_persistence_seed
 
     u.reset_otp_credentials!
-    (otp_auth_secret eq u.otp_auth_secret).should_not be_true
-    (otp_persistence_seed eq u.otp_persistence_seed).should_not be_true
-    u.otp_enabled.should_not be_true
+    expect(otp_auth_secret).to_not eq u.otp_auth_secret
+    expect(otp_persistence_seed).to_not eq u.otp_persistence_seed
+    expect(u.otp_enabled).to_not be_true
   end
 
-  test 'reset_otp_persistence should generate new persistence_seed but NOT change the otp_auth_secret' do
+  it 'reset_otp_persistence should generate new persistence_seed but NOT change the otp_auth_secret' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
-    u.otp_enabled.should_not be_false
+    expect(u.otp_enabled).to_not be_false
     otp_auth_secret = u.otp_auth_secret
     otp_persistence_seed = u.otp_persistence_seed
 
     u.reset_otp_persistence!
-    ((otp_auth_secret eq u.otp_auth_secret)).should_not be_false
-    (otp_persistence_seed eq u.otp_persistence_seed).should_not be_true
-    u.otp_enabled.should_not be_false
+    expect(otp_auth_secret).to eq u.otp_auth_secret
+    expect(otp_persistence_seed).to_not eq u.otp_persistence_seed
+    expect(u.otp_enabled).to_not be_false
   end
 
-  test 'generating a challenge, should retrieve the user later' do
+  it 'generating a challenge, should retrieve the user later' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
     challenge = u.generate_otp_challenge!
 
     w = User.find_valid_otp_challenge(challenge)
-    (w.is_a? User).should_not be_false
-    u.should eq w
+    expect(w.is_a? User).to_not be_false
+    expect(u).to eq w
   end
 
-  test 'expiring the challenge, should retrieve nothing' do
+  it 'expiring the challenge, should retrieve nothing' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
     challenge = u.generate_otp_challenge!(1.second)
     sleep(2)
 
     w = User.find_valid_otp_challenge(challenge)
-    w.should be_nil
+    expect(w).to be_nil
   end
 
-  test 'expired challenges should not be valid' do
+  it 'expired challenges should not be valid' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
     challenge = u.generate_otp_challenge!(1.second)
     sleep(2)
-    u.otp_challenge_valid?.should eq false
+
+    expect(u.otp_challenge_valid?).to be_false
   end
 
-  test 'null otp challenge' do
+  it 'null otp challenge' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
-    u.validate_otp_token('').should eq false
-    u.validate_otp_token(nil).should eq false
+    expect(u.validate_otp_token('')).to be_false
+    expect(u.validate_otp_token(nil)).to be_false
   end
 
-  test 'generated otp token should be valid for the user' do
+  it 'generated otp token should be valid for the user' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
 
     secret = u.otp_auth_secret
     token = ROTP::TOTP.new(secret).now
 
-    u.validate_otp_token(token).should eq true
+    expect(u.validate_otp_token(token)).to be_true
   end
 
-  test 'generated otp token, out of drift window, should be NOT valid for the user' do
+  it 'generated otp token, out of drift window, should be NOT valid for the user' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
 
@@ -104,17 +105,17 @@ class TwoFactorableTest < ActiveSupport::TestCase
 
     [3.minutes.from_now, 3.minutes.ago].each do |time|
       token = ROTP::TOTP.new(secret).at(time)
-      u.valid_otp_token?(token).should eq false
+      expect(u.valid_otp_token?(token)).to be_false
     end
   end
 
-  test 'recovery secrets should be valid, and valid only once' do
+  it 'recovery secrets should be valid, and valid only once' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
     recovery = u.next_otp_recovery_tokens
 
-    (u.valid_otp_recovery_token? recovery.fetch(0)).should_not be_false
-    u.valid_otp_recovery_token?(recovery.fetch(0)).should eq false
-    (u.valid_otp_recovery_token? recovery.fetch(2)).should_not be_false
+    expect(u.valid_otp_recovery_token?(recovery.fetch(0))).to_not be_false
+    expect(u.valid_otp_recovery_token?(recovery.fetch(0))).to be_false
+    expect(u.valid_otp_recovery_token?(recovery.fetch(2))).to_not be_false
   end
 end

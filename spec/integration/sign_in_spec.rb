@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'integration_tests_helper'
 
-class SignInTest < ActionDispatch::IntegrationTest
+RSpec.feature 'Sign in' do
   def teardown
     Capybara.reset_sessions!
   end
 
-  test 'a new user should be able to sign in without using their token' do
+  it 'a new user should be able to sign in without using their token' do
     create_full_user
 
     visit new_user_session_path
@@ -17,27 +17,27 @@ class SignInTest < ActionDispatch::IntegrationTest
     expect(current_path).to eq root_path
   end
 
-  test 'a new user, just signed in, should be able to sign in and enable their OTP authentication' do
+  it 'a new user, just signed in, should be able to sign in and enable their OTP authentication' do
     user = sign_user_in
 
     visit user_token_path
-    page.has_content?('Your token secret').should_not be_true
+    expect(page.body).to_not have_content('Your token secret')
     check 'user_otp_enabled'
     click_button 'Continue...'
 
     expect(current_path).to eq user_token_path
-    (page.has_content?('Your token secret')).should_not be_false
-    user.otp_auth_secret.nil?.should_not be_true
-    user.otp_persistence_seed.nil?.should_not be_true
+    expect(page.body).to have_content('Your token secret')
+    expect(user.otp_auth_secret.nil?).to_not be_true
+    expect(user.otp_persistence_seed.nil?).to_not be_true
   end
 
-  test 'a new user should be able to sign in enable OTP and be prompted for their token' do
+  it 'a new user should be able to sign in enable OTP and be prompted for their token' do
     enable_otp_and_sign_in
 
     expect(current_path).to eq user_credential_path
   end
 
-  test 'fail token authentication' do
+  it 'fail token authentication' do
     enable_otp_and_sign_in
     expect(current_path).to eq user_credential_path
     fill_in 'user_token', with: '123456'
@@ -46,7 +46,7 @@ class SignInTest < ActionDispatch::IntegrationTest
     expect(current_path).to eq new_user_session_path
   end
 
-  test 'fail blank token authentication' do
+  it 'fail blank token authentication' do
     enable_otp_and_sign_in
     expect(current_path).to eq user_credential_path
     fill_in 'user_token', with: ''
@@ -55,7 +55,7 @@ class SignInTest < ActionDispatch::IntegrationTest
     expect(current_path).to eq user_credential_path
   end
 
-  test 'successful token authentication' do
+  it 'successful token authentication' do
     user = enable_otp_and_sign_in
 
     fill_in 'user_token', with: ROTP::TOTP.new(user.otp_auth_secret).at(Time.now)
@@ -64,7 +64,7 @@ class SignInTest < ActionDispatch::IntegrationTest
     expect(current_path).to eq root_path
   end
 
-  test 'should fail if the the challenge times out' do
+  it 'should fail if the the challenge times out' do
     old_timeout = User.otp_authentication_timeout
     User.otp_authentication_timeout = 1.second
 
