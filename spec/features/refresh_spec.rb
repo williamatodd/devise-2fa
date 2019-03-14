@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'integration_tests_helper'
+require 'feature_specs_helper'
 
 RSpec.feature 'Refresh' do
   before(:each) do
@@ -12,14 +12,14 @@ RSpec.feature 'Refresh' do
     Capybara.reset_sessions!
   end
 
-  it 'a user that just signed in should be able to access their OTP settings without refreshing' do
+  scenario 'a user that just signed in should be able to access their OTP settings without refreshing' do
     sign_user_in
 
     visit user_token_path
     expect(current_path).to eq user_token_path
   end
 
-  it 'a user should be prompted for credentials when the credentials_refresh time is expired' do
+  scenario 'a user should be prompted for credentials when the credentials_refresh time is expired' do
     sign_user_in
     visit user_token_path
     expect(current_path).to eq user_token_path
@@ -29,7 +29,7 @@ RSpec.feature 'Refresh' do
     expect(current_path).to eq refresh_user_credential_path
   end
 
-  it 'a user should be able to access their OTP settings after refreshing' do
+  scenario 'a user should be able to access their OTP settings after refreshing' do
     sign_user_in
     visit user_token_path
     expect(current_path).to eq user_token_path
@@ -42,7 +42,7 @@ RSpec.feature 'Refresh' do
     expect(current_path).to eq user_token_path
   end
 
-  it 'a user should NOT be able to access their OTP settings unless refreshing' do
+  scenario 'a user should NOT be able to access their OTP settings unless refreshing' do
     sign_user_in
     visit user_token_path
     expect(current_path).to eq user_token_path
@@ -55,7 +55,7 @@ RSpec.feature 'Refresh' do
     expect(current_path).to eq refresh_user_credential_path
   end
 
-  it 'user should be asked their OTP challenge in order to refresh, if they have OTP' do
+  scenario 'user should be asked their OTP challenge in order to refresh, if they have OTP' do
     enable_otp_and_sign_in_with_otp
 
     sleep(2)
@@ -67,7 +67,7 @@ RSpec.feature 'Refresh' do
     expect(current_path).to eq refresh_user_credential_path
   end
 
-  it 'user should be finally be able to access their settings, if they provide both a password and a valid OTP token' do
+  scenario 'user should be finally be able to access their settings, if they provide both a password and a valid OTP token' do
     user = enable_otp_and_sign_in_with_otp
 
     sleep(2)
@@ -80,7 +80,7 @@ RSpec.feature 'Refresh' do
     expect(current_path).to eq user_token_path
   end
 
-  it 'and rejected when the token is blank or null' do
+  scenario 'and rejected when the token is blank or null' do
     user = enable_otp_and_sign_in_with_otp
 
     sleep(2)

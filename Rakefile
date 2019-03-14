@@ -22,20 +22,9 @@ end
 
 Bundler::GemHelper.install_tasks
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/*_test.rb'
-  test.verbose = true
-end
+require 'rspec/core/rake_task'
 
-desc 'Run Devise tests for all ORMs.'
-task :tests do
-  Dir[File.join(File.dirname(__FILE__), 'test', 'orm', '*.rb')].each do |file|
-    orm = File.basename(file).split('.').first
-    system "rake test DEVISE_ORM=#{orm}"
-  end
-end
+RSpec::Core::RakeTask.new(:spec)
 
-desc 'Default: run tests for all ORMs.'
-task default: :tests
+# If you want to make this the default task
+task default: :spec

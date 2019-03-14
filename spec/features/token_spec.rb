@@ -1,12 +1,12 @@
 require 'spec_helper'
-require 'integration_tests_helper'
+require 'feature_specs_helper'
 
 RSpec.feature 'Token' do
   def teardown
     Capybara.reset_sessions!
   end
 
-  it 'disabling OTP after successfully enabling' do
+  scenario 'disabling OTP after successfully enabling' do
     # log in 1fa
     user = enable_otp_and_sign_in
     expect(current_path).to eq user_credential_path

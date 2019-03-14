@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'integration_tests_helper'
+require 'feature_specs_helper'
 
 RSpec.feature 'Persistence' do
   before(:each) do
@@ -12,7 +12,7 @@ RSpec.feature 'Persistence' do
     Capybara.reset_sessions!
   end
 
-  it 'a user should be requested the otp challenge every log in' do
+  scenario 'a user should be requested the otp challenge every log in' do
     # log in 1fa
     user = enable_otp_and_sign_in
     otp_challenge_for user
@@ -25,7 +25,7 @@ RSpec.feature 'Persistence' do
     expect(current_path).to eq user_credential_path
   end
 
-  it 'a user should be able to set their browser as trusted' do
+  scenario 'a user should be able to set their browser as trusted' do
     # log in 1fa
     user = enable_otp_and_sign_in
     otp_challenge_for user
@@ -41,7 +41,7 @@ RSpec.feature 'Persistence' do
     expect(current_path).to eq root_path
   end
 
-  it 'trusted status should expire' do
+  scenario 'trusted status should expire' do
     # log in 1fa
     user = enable_otp_and_sign_in
     otp_challenge_for user

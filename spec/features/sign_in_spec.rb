@@ -1,12 +1,12 @@
 require 'spec_helper'
-require 'integration_tests_helper'
+require 'feature_specs_helper'
 
 RSpec.feature 'Sign in' do
   def teardown
     Capybara.reset_sessions!
   end
 
-  it 'a new user should be able to sign in without using their token' do
+  scenario 'a new user should be able to sign in without using their token' do
     create_full_user
 
     visit new_user_session_path
@@ -17,7 +17,7 @@ RSpec.feature 'Sign in' do
     expect(current_path).to eq root_path
   end
 
-  it 'a new user, just signed in, should be able to sign in and enable their OTP authentication' do
+  scenario 'a new user, just signed in, should be able to sign in and enable their OTP authentication' do
     user = sign_user_in
 
     visit user_token_path
@@ -31,13 +31,13 @@ RSpec.feature 'Sign in' do
     expect(user.otp_persistence_seed.nil?).to_not be_true
   end
 
-  it 'a new user should be able to sign in enable OTP and be prompted for their token' do
+  scenario 'a new user should be able to sign in enable OTP and be prompted for their token' do
     enable_otp_and_sign_in
 
     expect(current_path).to eq user_credential_path
   end
 
-  it 'fail token authentication' do
+  scenario 'fail token authentication' do
     enable_otp_and_sign_in
     expect(current_path).to eq user_credential_path
     fill_in 'user_token', with: '123456'
@@ -46,7 +46,7 @@ RSpec.feature 'Sign in' do
     expect(current_path).to eq new_user_session_path
   end
 
-  it 'fail blank token authentication' do
+  scenario 'fail blank token authentication' do
     enable_otp_and_sign_in
     expect(current_path).to eq user_credential_path
     fill_in 'user_token', with: ''
@@ -55,7 +55,7 @@ RSpec.feature 'Sign in' do
     expect(current_path).to eq user_credential_path
   end
 
-  it 'successful token authentication' do
+  scenario 'successful token authentication' do
     user = enable_otp_and_sign_in
 
     fill_in 'user_token', with: ROTP::TOTP.new(user.otp_auth_secret).at(Time.now)
@@ -64,7 +64,7 @@ RSpec.feature 'Sign in' do
     expect(current_path).to eq root_path
   end
 
-  it 'should fail if the the challenge times out' do
+  scenario 'should fail if the the challenge times out' do
     old_timeout = User.otp_authentication_timeout
     User.otp_authentication_timeout = 1.second
 

@@ -1,6 +1,4 @@
-class ActionDispatch::IntegrationTest
-  include Warden::Test::Helpers
-
+class FeatureSpecsHelper
   def warden
     request.env['warden']
   end

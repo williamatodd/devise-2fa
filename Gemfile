@@ -4,10 +4,6 @@ gemspec
 
 gem 'rdoc'
 
-group :development do
-  gem 'transpec'
-end
-
 group :test do
   platforms :jruby do
     gem 'activerecord-jdbcsqlite3-adapter', '>= 1.3.0.beta1'
@@ -25,5 +21,5 @@ group :test do
   gem 'shoulda'
   gem 'selenium-webdriver'
 
-  gem 'minitest-reporters', '>= 0.5.0'
+  gem 'rspec'
 end
