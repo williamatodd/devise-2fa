@@ -33,8 +33,8 @@ class TwoFactorableTest < ActiveSupport::TestCase
     otp_persistence_seed = u.otp_persistence_seed
 
     u.reset_otp_credentials!
-    (otp_auth_secret == u.otp_auth_secret).should_not be_true
-    (otp_persistence_seed == u.otp_persistence_seed).should_not be_true
+    (otp_auth_secret eq u.otp_auth_secret).should_not be_true
+    (otp_persistence_seed eq u.otp_persistence_seed).should_not be_true
     u.otp_enabled.should_not be_true
   end
 
@@ -46,8 +46,8 @@ class TwoFactorableTest < ActiveSupport::TestCase
     otp_persistence_seed = u.otp_persistence_seed
 
     u.reset_otp_persistence!
-    ((otp_auth_secret == u.otp_auth_secret)).should_not be_false
-    (otp_persistence_seed == u.otp_persistence_seed).should_not be_true
+    ((otp_auth_secret eq u.otp_auth_secret)).should_not be_false
+    (otp_persistence_seed eq u.otp_persistence_seed).should_not be_true
     u.otp_enabled.should_not be_false
   end
 
@@ -58,7 +58,7 @@ class TwoFactorableTest < ActiveSupport::TestCase
 
     w = User.find_valid_otp_challenge(challenge)
     (w.is_a? User).should_not be_false
-    u.should == w
+    u.should eq w
   end
 
   test 'expiring the challenge, should retrieve nothing' do
@@ -76,14 +76,14 @@ class TwoFactorableTest < ActiveSupport::TestCase
     u.update_attribute(:otp_enabled, true)
     challenge = u.generate_otp_challenge!(1.second)
     sleep(2)
-    u.otp_challenge_valid?.should == false
+    u.otp_challenge_valid?.should eq false
   end
 
   test 'null otp challenge' do
     u = User.first
     u.update_attribute(:otp_enabled, true)
-    u.validate_otp_token('').should == false
-    u.validate_otp_token(nil).should == false
+    u.validate_otp_token('').should eq false
+    u.validate_otp_token(nil).should eq false
   end
 
   test 'generated otp token should be valid for the user' do
@@ -93,7 +93,7 @@ class TwoFactorableTest < ActiveSupport::TestCase
     secret = u.otp_auth_secret
     token = ROTP::TOTP.new(secret).now
 
-    u.validate_otp_token(token).should == true
+    u.validate_otp_token(token).should eq true
   end
 
   test 'generated otp token, out of drift window, should be NOT valid for the user' do
@@ -104,7 +104,7 @@ class TwoFactorableTest < ActiveSupport::TestCase
 
     [3.minutes.from_now, 3.minutes.ago].each do |time|
       token = ROTP::TOTP.new(secret).at(time)
-      u.valid_otp_token?(token).should == false
+      u.valid_otp_token?(token).should eq false
     end
   end
 
@@ -114,7 +114,7 @@ class TwoFactorableTest < ActiveSupport::TestCase
     recovery = u.next_otp_recovery_tokens
 
     (u.valid_otp_recovery_token? recovery.fetch(0)).should_not be_false
-    u.valid_otp_recovery_token?(recovery.fetch(0)).should == false
+    u.valid_otp_recovery_token?(recovery.fetch(0)).should eq false
     (u.valid_otp_recovery_token? recovery.fetch(2)).should_not be_false
   end
 end
