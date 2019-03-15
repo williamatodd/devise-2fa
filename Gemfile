@@ -9,8 +9,6 @@ group :test do
     gem 'sqlite3', '~> 1.3.4'
   end
 
-  gem 'rails', '~> 5.2.2.1'
-
   gem 'devise'
   gem 'mongoid'
 
