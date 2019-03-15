@@ -1,4 +1,6 @@
-class FeatureSpecsHelper
+# frozen_string_literal: true
+
+module FeatureHelpers
   def warden
     request.env['warden']
   end
@@ -59,4 +61,8 @@ class FeatureSpecsHelper
     page.has_content?('Log in') ? click_button('Log in') : click_button('Sign in')
     user
   end
+end
+
+RSpec.configure do |config|
+  config.include FeatureHelpers, type: :feature
 end

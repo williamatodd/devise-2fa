@@ -1,7 +1,6 @@
 require 'spec_helper'
-require 'feature_specs_helper'
 
-RSpec.feature 'Refresh' do
+RSpec.feature 'Refresh', type: :feature do
   before(:each) do
     @old_refresh = User.otp_credentials_refresh
     User.otp_credentials_refresh = 1.second

@@ -1,7 +1,6 @@
 require 'spec_helper'
-require 'feature_specs_helper'
 
-RSpec.feature 'Token' do
+RSpec.feature 'Token', type: :feature do
   def teardown
     Capybara.reset_sessions!
   end

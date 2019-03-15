@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.name          = 'devise-2fa'
   gem.version       = Devise::TwoFactor::VERSION
   gem.authors       = ['William A. Todd']
-  gem.email         = ['info@investinwaffles.com']
+  gem.email         = ['info@rockcreek.io']
   gem.description   = 'Time Based OTP/rfc6238 authentication for Devise'
   gem.summary       = 'Includes ActiveRecord and Mongoid ORM support'
   gem.homepage      = 'http://www.github.com/williamatodd/devise-2fa'
@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
-  gem.add_runtime_dependency 'devise', '~> 4.0'
+  gem.add_runtime_dependency 'devise'
   gem.add_runtime_dependency 'rotp', '~> 3.0'
   gem.add_runtime_dependency 'rqrcode', '~> 0.10.1'
   gem.add_runtime_dependency 'symmetric-encryption', '~> 4.0'

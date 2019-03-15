@@ -1,7 +1,6 @@
 require 'spec_helper'
-require 'feature_specs_helper'
 
-RSpec.feature 'Persistence' do
+RSpec.feature 'Persistence', type: :feature do
   before(:each) do
     @old_persistence = User.otp_trust_persistence
     User.otp_trust_persistence = 3.seconds

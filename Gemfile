@@ -5,21 +5,18 @@ gemspec
 gem 'rdoc'
 
 group :test do
-  platforms :jruby do
-    gem 'activerecord-jdbcsqlite3-adapter', '>= 1.3.0.beta1'
-  end
-
   platforms :ruby do
     gem 'sqlite3', '~> 1.3.4'
   end
 
-  gem 'devise', '~> 4.0'
-  gem 'activerecord', '~> 4.2.6'
-  gem 'mongo'
+  gem 'rails', '~> 5.2.2.1'
+
+  gem 'devise'
+  gem 'mongoid'
 
   gem 'capybara'
   gem 'shoulda'
   gem 'selenium-webdriver'
-
-  gem 'rspec'
+  gem 'chromedriver-helper'
+  gem 'capybara-screenshot'
 end
