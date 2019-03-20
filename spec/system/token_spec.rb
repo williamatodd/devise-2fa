@@ -20,7 +20,7 @@ RSpec.describe 'Tokens' do
     expect(current_path).to eq(root_path)
   end
 
-  xit 'cannot be reused' do
+  it 'cannot be reused' do
     enable_otp_and_sign_in user
 
     prev_token = ROTP::TOTP.new(user.otp_auth_secret).at(Time.now)
