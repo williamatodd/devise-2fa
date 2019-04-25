@@ -1,17 +1,12 @@
-#!/usr/bin/env ruby
-require 'pathname'
-require 'fileutils'
-include FileUtils
+#!/bin/bash
 
-# path to your application root.
-APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
+# Fail out, bail out
+set -e
 
-def system!(*args)
-  system(*args) || abort("\n== Command #{args} failed ==")
-end
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-chdir APP_ROOT do
-  puts '== Installing dependencies =='
-  system! 'gem install bundler --conservative'
-  system('bundle check') || system!('bundle install')
-end
+echo "Installing dependencies"
+gem install bundler --conservative
+bundle check || bundle install
+
+$DIR/../spec/dummy/bin/setup

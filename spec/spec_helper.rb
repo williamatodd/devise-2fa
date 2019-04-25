@@ -12,7 +12,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dummy::Application.initialize!
 
 require 'capybara/rails'
-Capybara.default_driver = :selenium
+
 Capybara.server = :webrick
 
 RSpec.configure do |config|
@@ -20,6 +20,10 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.include Devise::Test::IntegrationHelpers, type: :system
+
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
 end
 
 
