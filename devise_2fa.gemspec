@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.name          = 'devise-2fa'
   gem.version       = Devise::TwoFactor::VERSION
   gem.authors       = ['William A. Todd']
-  gem.email         = ['info@investinwaffles.com']
+  gem.email         = ['info@rockcreek.io']
   gem.description   = 'Time Based OTP/rfc6238 authentication for Devise'
   gem.summary       = 'Includes ActiveRecord and Mongoid ORM support'
   gem.homepage      = 'http://www.github.com/williamatodd/devise-2fa'
