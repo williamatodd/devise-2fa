@@ -1,5 +1,7 @@
 # Devise::TwoFactor
 
+[![CircleCI](https://circleci.com/gh/williamatodd/devise-2fa.svg?style=svg)](https://circleci.com/gh/williamatodd/devise-2fa)
+
 Devise TwoFactor implements two-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
 * Uses [rotp](https://github.com/mdp/rotp) for the generation and verification of codes.
 * Uses [RQRCode](https://github.com/whomwah/rqrcode) to generate QR Code PNGs.
@@ -124,4 +126,4 @@ This extension is a hodgepodge of
 
 MIT Licensed
 
-Copyright © 2015-2016 William A. Todd
+Copyright © 2015-2019 William A. Todd and contributors.

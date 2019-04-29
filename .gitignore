@@ -39,3 +39,6 @@ build/
 spec/dummy/db/development.sqlite3
 spec/dummy/log/*
 spec/dummy/db/test.sqlite3
+*.cache
+spec/dummy/tmp/development_secret.txt
+spec/dummy/tmp/restart.txt
