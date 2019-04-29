@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <title>Dummy</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+    <%= yield %>
+  </body>
+</html>

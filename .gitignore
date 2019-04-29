@@ -34,3 +34,8 @@ build/
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
+# Rails
+spec/dummy/db/development.sqlite3
+spec/dummy/log/*
+spec/dummy/db/test.sqlite3
