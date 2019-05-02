@@ -18,12 +18,12 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
-  gem.add_dependency "rails", "~> 5.0"
+  gem.add_dependency "rails", ">= 4.1", "< 6.1"
 
   gem.add_runtime_dependency 'devise', '~> 4.0'
   gem.add_runtime_dependency 'rotp', '~> 3.0'
   gem.add_runtime_dependency 'rqrcode', '~> 0.10.1'
-  gem.add_runtime_dependency 'symmetric-encryption', '~> 4.2.0'
+  gem.add_runtime_dependency 'symmetric-encryption', '~> 4.3.0'
 
   gem.add_development_dependency 'sqlite3', '~> 1.3.6'
   gem.add_development_dependency 'selenium-webdriver'
