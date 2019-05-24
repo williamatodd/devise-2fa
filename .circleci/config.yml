@@ -11,8 +11,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            - v1-dependencies-
+            - v1-dependencies-{{ checksum "devise_2fa.gemspec" }}
 
       - run:
           name: install dependencies
@@ -22,7 +21,7 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+          key: v1-dependencies-{{ checksum "devise_2fa.gemspec" }}
 
       - run: cd spec/dummy && bin/setup
 
