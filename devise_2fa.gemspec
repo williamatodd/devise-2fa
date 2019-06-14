@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
+  gem.post_install_message = 'Ensure you run db:migrate'
 
   gem.add_dependency "rails", ">= 4.1", "< 6.1"
 
