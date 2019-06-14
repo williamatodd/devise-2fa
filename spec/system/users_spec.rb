@@ -52,6 +52,16 @@ RSpec.describe 'Users' do
         expect(current_path).to eq(root_path)
       end
 
+      it 'saves the last_success_otp_at when the user successfully otps upon signing in' do
+        enable_otp_and_sign_in user
+        fill_in 'user_token', with: ROTP::TOTP.new(user.otp_auth_secret).at(Time.now)
+        time = Time.now
+        click_button 'Submit Token'
+
+        user.reload
+        expect(user.last_successful_otp_at).to be_within(2.seconds).of(Time.now)
+      end
+
       it 'fails with an incorrect code' do
         enable_otp_and_sign_in user
         fill_in 'user_token', with: '123456'

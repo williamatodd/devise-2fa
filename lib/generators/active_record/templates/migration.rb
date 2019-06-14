@@ -1,4 +1,4 @@
-class DeviseTwoFactorAddTo<%= table_name.camelize %> < ActiveRecord::Migration
+class DeviseTwoFactorAddTo<%= table_name.camelize %> < ActiveRecord::Migration[5.0]
   def self.up
     change_table :<%= table_name %> do |t|
       t.string    :otp_auth_secret

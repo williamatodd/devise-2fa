@@ -71,6 +71,7 @@ RSpec.describe 'Refresh' do
   end
 
   it 'user should be finally be able to access their settings, if they provide both a password and a valid OTP token' do
+    User.otp_drift_window = 1
     enable_otp_and_sign_in_with_otp user
 
     sleep(2)

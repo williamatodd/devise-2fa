@@ -66,7 +66,21 @@ After you've created your Devise user models (which is usually done with a "rail
 
     rails g devise_two_factor MODEL
 
+Then generate the migrations:
+     
+    rails g devise_two_factor:migrations MODEL
+
 Don't forget to migrate:
+
+    rake db:migrate
+
+### Updating
+
+After updating the gem, run to install the latest migrations:
+
+    rails g devise_two_factor:migrations MODEL
+
+And don't forget to migrate:
 
     rake db:migrate
 

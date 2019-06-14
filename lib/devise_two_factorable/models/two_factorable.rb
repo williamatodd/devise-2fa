@@ -95,7 +95,10 @@ module Devise::Models
 
     def validate_otp_time_token(token)
       return false if token.blank?
-      validate_otp_token_with_drift(token)
+      return false unless validate_otp_token_with_drift(token)
+
+      self.last_successful_otp_at = Time.now
+      self.save!
     end
     alias valid_otp_time_token? validate_otp_time_token
 
@@ -118,6 +121,10 @@ module Devise::Models
 
     def validate_otp_token_with_drift(token)
       # should be centered around saved drift
+      if self.last_successful_otp_at && token_already_used?
+        return false
+      end
+
       (-self.class.otp_drift_window..self.class.otp_drift_window).any? do |drift|
         time_based_otp.verify(token, drift_behind: (0.5 * drift), at: Time.now + (0.5 * drift))
       end
@@ -125,6 +132,10 @@ module Devise::Models
 
     def generate_otp_persistence_seed
       self.otp_persistence_seed = SecureRandom.hex
+    end
+
+    def token_already_used?
+      (self.last_successful_otp_at - Time.now).abs < self.class.otp_drift_window
     end
 
     def generate_otp_auth_secret
