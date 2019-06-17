@@ -23,7 +23,6 @@ module Mongoid
   field :otp_persistence_seed,            type: String
   field :otp_session_challenge,           type: String
   field :otp_challenge_expires,           type: DateTime
-  field :last_successful_otp_at,          type: DateTime
 
   index({ otp_session_challenge: 1 }, background: true)
   index({ otp_challenge_expires: 1 }, background: true)
