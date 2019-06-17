@@ -135,7 +135,7 @@ module Devise::Models
     end
 
     def token_already_used?
-      (self.last_successful_otp_at - Time.now).abs < self.class.otp_drift_window
+      (last_successful_otp_at - Time.current).abs < self.class.otp_drift_window
     end
 
     def generate_otp_auth_secret
