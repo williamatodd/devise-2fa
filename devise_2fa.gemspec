@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
-  gem.post_install_message = 'Ensure you run db:migrate'
+  gem.post_install_message = 'If upgrading to 0.3.0, ensure you run db:migrate if using ActiveRecord or add :last_successful_otp_at, type: DateTime to your Mongoid model.'
 
   gem.add_dependency "rails", ">= 4.1", "< 6.1"
 
