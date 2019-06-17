@@ -67,30 +67,22 @@ After you've created your Devise user models (which is usually done with a "rail
     rails g devise_two_factor MODEL
 
 Then generate the migrations:
-
+     
     rails g devise_two_factor:migrations MODEL
 
 Don't forget to migrate:
 
     rake db:migrate
 
-### Upgrading to 0.3.0
+### Updating
 
-#### ActiveRecord
-
-After upgrading the gem, run to install the latest migrations:
+After updating the gem, run to install the latest migrations:
 
     rails g devise_two_factor:migrations MODEL
 
 And don't forget to migrate:
 
     rake db:migrate
-
-#### Mongoid
-
-After upgrading the gem, add the new field to your model:
-
-    field :last_successful_otp_at, type: DateTime
 
 ### Custom Views
 
@@ -101,6 +93,7 @@ If you want to customize your views (which you likely will want to), you can use
 ### I18n
 
 The install generator also installs an english copy of a Devise TwoFactor i18n file. This can be modified (or used to create other language versions) and is located at: _config/locales/devise.two_factor.en.yml_
+
 
 ## Usage
 
