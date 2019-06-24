@@ -1,45 +1,70 @@
 version: 2
+
+build_config: &build_config
+  working_directory: ~/repo
+  steps:
+    - checkout
+
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "devise_2fa.gemspec" }}-{{ checksum "Appraisals" }}
+          - v1-dependencies-{{ checksum "devise_2fa.gemspec" }}
+          - v1-dependencies
+
+    - run: bin/setup
+
+    - save_cache:
+        paths:
+          - ./vendor/bundle
+        key: v1-dependencies-{{ checksum "devise_2fa.gemspec" }}-{{ checksum "Appraisals" }}
+
+    - run:
+        name: Setup Symmetric Encryption Config
+        command: |
+          cd spec/dummy/
+          symmetric-encryption -g
+
+    - run:
+        name: Run Tests
+        command: |
+          mkdir /tmp/test-results
+          TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
+            circleci tests split --split-by=timings)"
+
+          bundle exec appraisal rspec \
+            --format progress \
+            --format RspecJunitFormatter \
+            --out /tmp/test-results/rspec.xml \
+            --format progress \
+            $TEST_FILES
+
+    - store_test_results:
+        path: /tmp/test-results
+    - store_artifacts:
+        path: /tmp/test-results
+        destination: test-results
+
 jobs:
-  build:
+  ruby-2.4:
+    <<: *build_config
     docker:
-      - image: circleci/ruby:2.4.1-node-browsers
+      - image: circleci/ruby:2.4-node-browsers
+      - image: circleci/mongo
+  ruby-2.5:
+    <<: *build_config
+    docker:
+      - image: circleci/ruby:2.5-node-browsers
+      - image: circleci/mongo
+  build:
+    <<: *build_config
+    docker:
+      - image: circleci/ruby:2.6-node-browsers
+      - image: circleci/mongo
 
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "devise_2fa.gemspec" }}
-
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "devise_2fa.gemspec" }}
-
-      - run: cd spec/dummy && bin/setup
-
-      - run:
-          name: run tests
-          command: |
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
-              circleci tests split --split-by=timings)"
-
-            bundle exec rspec \
-              --format progress \
-              --out /tmp/test-results/rspec.xml \
-              --format progress \
-              $TEST_FILES
-
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+workflows:
+  version: 2
+  build:
+    jobs:
+      - ruby-2.4
+      - ruby-2.5
+      - build

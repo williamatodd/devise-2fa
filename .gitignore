@@ -42,3 +42,6 @@ spec/dummy/db/test.sqlite3
 *.cache
 spec/dummy/tmp/development_secret.txt
 spec/dummy/tmp/restart.txt
+
+gemfiles/
+Gemfile.lock
