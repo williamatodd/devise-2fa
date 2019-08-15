@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-ENV["RAILS_ENV"] ||= "test"
+ENV['RAILS_ENV'] ||= 'test'
 
-require "rails/all"
-require "dummy/config/application"
+require 'dummy/config/application'
 require 'bundler/setup'
 require 'rspec/rails'
 
@@ -23,6 +22,11 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
+  end
+  if defined? Mongoid
+    config.before :each do
+      Mongoid.purge!
+    end
   end
 end
 

@@ -1,6 +1,14 @@
 require_relative 'boot'
 
-require 'rails/all'
+require 'rails'
+require 'active_model/railtie'
+unless ENV['BUNDLE_GEMFILE'].include?('mongodb')
+  require 'active_record/railtie'
+end
+require 'action_controller/railtie'
+require 'action_view/railtie'
+require 'sprockets/railtie'
+require 'rails/test_unit/railtie'
 
 Bundler.require(*Rails.groups)
 require 'devise-2fa'
@@ -11,4 +19,3 @@ module Dummy
     config.load_defaults 5.0
   end
 end
-

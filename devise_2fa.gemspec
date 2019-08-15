@@ -25,10 +25,11 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'rqrcode', '~> 0.10.1'
   gem.add_runtime_dependency 'symmetric-encryption', '~> 4.3.0'
 
-  gem.add_development_dependency 'sqlite3', '~> 1.3.6'
-  gem.add_development_dependency 'selenium-webdriver'
-  gem.add_development_dependency 'rspec-rails'
+  gem.add_development_dependency 'appraisal'
   gem.add_development_dependency 'capybara'
-  gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'pry'
+  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rspec-rails'
+  gem.add_development_dependency 'rspec_junit_formatter'
+  gem.add_development_dependency 'selenium-webdriver'
 end

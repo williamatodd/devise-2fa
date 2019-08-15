@@ -9,4 +9,6 @@ echo "Installing dependencies"
 gem install bundler --conservative
 bundle check || bundle install
 
-$DIR/../spec/dummy/bin/setup
+bundle exec appraisal install
+
+bundle exec appraisal $DIR/../spec/dummy/bin/setup
