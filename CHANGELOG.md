@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2019-08-22
+### Added
+- Appraisal suite.
+- Mongoid specs.
+
+### Changed
+- Refactors #validate_otp_token_with_drift from #15.
+- Upgraded rotp dependency to ```~> 5.1```.
+
+## [0.3.0] - REVOKED
+
 ## [0.2.1] - 2019-05-28
 ### Changed
 - Relaxed Rails dependency to ```~> 6.1```.
