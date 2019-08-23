@@ -117,10 +117,15 @@ module Devise::Models
     private
 
     def validate_otp_token_with_drift(token)
-      # should be centered around saved drift
-      (-self.class.otp_drift_window..self.class.otp_drift_window).any? do |drift|
-        time_based_otp.verify(token, drift_behind: (0.5 * drift), at: Time.now + (0.5 * drift))
-      end
+      time_based_otp.verify(
+        token,
+        drift_behind: drift.minutes.seconds,
+        at: Time.now + drift.minutes.seconds / 2
+      )
+    end
+
+    def drift
+      self.class.otp_drift_window
     end
 
     def generate_otp_persistence_seed

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe 'Tokens' do
-  subject (:user) { User.create(email: 'mb@geemail.com', password: 'iwantabigmac1') }
+  subject(:user) { User.create(email: 'mb@geemail.com', password: 'iwantabigmac1') }
 
   it 'can be disabled by a user after successfully enabling' do
     enable_otp_and_sign_in user
