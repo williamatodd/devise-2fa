@@ -27,6 +27,16 @@ module ActiveRecord
   validates :otp_recovery_secret, symmetric_encryption: true
 RUBY
       end
+
+      private
+
+      def model_exists?
+        File.exist?(File.join(destination_root, model_path))
+      end
+
+      def model_path
+        @model_path ||= File.join("app", "models", "#{file_path}.rb")
+      end
     end
   end
 end
