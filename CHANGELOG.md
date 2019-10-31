@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2019-10-31
+### Changed
+- Adds missing methods to ActiveRecord generator to fix issue #16.
+- Adds a missing manifest.js to Dummy application.
+- Fixes devise_error_messages! deprecation warning by using the new partial.
+- Fixes sqlite3.represent_boolean_as_integer deprecation warning in specs.
+
 ## [0.4.0] - 2019-08-22
 ### Added
 - Appraisal suite.
