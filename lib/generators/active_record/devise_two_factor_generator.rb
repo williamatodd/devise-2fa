@@ -23,8 +23,6 @@ module ActiveRecord
 <<RUBY
   attribute :otp_auth_secret, :encrypted
   attribute :otp_recovery_secret, :encrypted
-  validates :otp_auth_secret, symmetric_encryption: true, if: proc { |o| o.otp_enabled? }
-  validates :otp_recovery_secret, symmetric_encryption: true, if: proc { |o| o.otp_enabled? }
 RUBY
       end
 
