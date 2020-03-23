@@ -21,10 +21,8 @@ module ActiveRecord
 
       def content
 <<RUBY
-  attr_encrypted :otp_auth_secret
-  attr_encrypted :otp_recovery_secret
-  validates :otp_auth_secret, symmetric_encryption: true
-  validates :otp_recovery_secret, symmetric_encryption: true
+  attribute :otp_auth_secret, :encrypted
+  attribute :otp_recovery_secret, :encrypted
 RUBY
       end
 
