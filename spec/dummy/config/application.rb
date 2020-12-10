@@ -16,9 +16,9 @@ require 'devise'
 
 module Dummy
   class Application < Rails::Application
-    config.load_defaults 5.0
-    unless ENV['BUNDLE_GEMFILE'].include?('mongodb')
-      Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
-    end
+    # config.load_defaults 5.0
+    # unless ENV['BUNDLE_GEMFILE'].include?('mongodb')
+    #   Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+    # end
   end
 end
