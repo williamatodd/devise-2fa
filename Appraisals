@@ -1,12 +1,25 @@
 # frozen_string_literal: true
 
-appraise 'sqlite3' do
-  gem 'rails', '~> 5.2'
-  gem 'sqlite3'
+appraise 'rails_5_2_sqlite3' do
+  gem 'rails', '5.2.4.4'
+  gem 'sqlite3', '~> 1.3.6'
 end
 
-appraise 'mongodb' do
-  gem 'rails', '~> 5.2'
-  gem 'mongoid'
-  gem 'bson_ext'
+if Gem::Requirement.new('>= 2.5.0').satisfied_by?(Gem::Version.new(RUBY_VERSION))
+  appraise 'rails_6_0_sqlite3' do
+    gem 'rails', '6.0.3.4'
+    gem 'sqlite3', '~> 1.4'
+  end
+end
+
+appraise 'rails_5_2_mongodb' do
+  gem 'rails', '5.2.4.4'
+  gem 'mongoid', '6.4'
+end
+
+if Gem::Requirement.new('>= 2.5.0').satisfied_by?(Gem::Version.new(RUBY_VERSION))
+  appraise 'rails_6_0_mongodb' do
+    gem 'rails', '6.0.3.4'
+    gem 'mongoid', '7.2'
+  end
 end

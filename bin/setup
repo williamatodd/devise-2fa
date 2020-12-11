@@ -6,8 +6,8 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 echo "Installing dependencies"
-gem install bundler --conservative
-bundle check || bundle install
+
+bundle check || bundle install --jobs=3 --retry=3
 
 bundle exec appraisal install
 
