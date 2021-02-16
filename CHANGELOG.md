@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- *Possibly Breaking*: Remove assumption of using symmetric-encryption gem and replace with optional instructions for how to encrypt secrets. For existing applications, you'll likely need to add `gem 'symmetric-encryption'` to your Gemfile if it's not already there.
 
 ## [0.4.1] - 2019-10-31
 ### Changed

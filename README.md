@@ -5,7 +5,6 @@
 Devise TwoFactor implements two-factor authentication for Devise, using an rfc6238 compatible Time-Based One-Time Password Algorithm.
 * Uses [rotp](https://github.com/mdp/rotp) for the generation and verification of codes.
 * Uses [RQRCode](https://github.com/whomwah/rqrcode) to generate QR Code PNGs.
-* Uses [SymmetricEncryption](https://github.com/rocketjob/symmetric-encryption) to encrypt secrets and recovery codes.
 
 It currently has the following features:
 
@@ -21,8 +20,6 @@ Compatible token devices are:
 * [FreeOTP](https://fedorahosted.org/freeotp/)
 
 ## Installation
-
-Setup the symmetric-encryption gem by following the steps on the (configuration page)[http://rocketjob.github.io/symmetric-encryption/configuration.html]
 
 Add this line to your application's Gemfile:
 
@@ -103,7 +100,46 @@ The install generator adds some options to the end of your Devise config file (c
 * `config.otp_trust_persistence` - The user is allowed to set his browser as "trusted", no more OTP challenges will be asked for that browser, for a limited time. (default: `1.month`, set to false to disable setting the browser as trusted)
 * `config.otp_issuer` - The name of the token issuer, to be added to the provisioning url. Display will vary based on token application. (defaults to the Rails application class)
 
-### Development
+## Encrypting Secrets
+
+It's best practice to encrypt the secrets stored in the database for authentication and recovery so they can't be exploted should your database be breached. You can use a gem like [SymmetricEncryption](https://github.com/rocketjob/symmetric-encryption) to seamlessly handle the encryption.
+
+The following instructions assume you're starting from scratch and don't have any existing two-factor authentication data.
+
+Add this line to your application's Gemfile:
+
+    gem 'symmetric-encryption'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install symmetric-encryption
+
+Next, setup the symmetric-encryption gem by following the steps on the (configuration page)[http://rocketjob.github.io/symmetric-encryption/configuration.html]
+
+Finally, modify your model to specify which attributes to encrypt. For Rails 5+, add the following to your model:
+
+    attribute :otp_auth_secret, :encrypted
+    attribute :otp_recovery_secret, :encrypted
+
+For Rails 3/4, add the following to your model:
+
+    attr_encrypted :otp_auth_secret
+    attr_encrypted :otp_recovery_secret
+    validates :otp_auth_secret, symmetric_encryption: true
+    validates :otp_recovery_secret, symmetric_encryption: true
+
+And rename the `otp_auth_secret` and `otp_recovery_secret` columns in your database to `encrypted_otp_auth_secret` and `encrypted_otp_recovery_secret`, respectively.
+
+For Mongoid, replace your `otp_auth_secret` and `otp_recovery_secret` fields with the following:
+
+    field :encrypted_otp_auth_secret,     type: String, encrypted: true
+    field :encrypted_otp_recovery_secret, type: String, encrypted: true
+
+## Development
 
 Set up the gem for development with `bin/setup`.
 

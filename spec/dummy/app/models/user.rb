@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'symmetric_encryption'
-
 if defined?(ActiveRecord)
   class User < ApplicationRecord
     devise :two_factorable, :database_authenticatable, :registerable,
@@ -11,8 +9,8 @@ else
   require 'mongoid'
   class User
     include Mongoid::Document
-    field :encrypted_otp_auth_secret,       type: String, encrypted: true
-    field :encrypted_otp_recovery_secret,   type: String, encrypted: true
+    field :otp_auth_secret,                 type: String
+    field :otp_recovery_secret,             type: String
     field :otp_enabled,                     type: Boolean, default: false
     field :otp_mandatory,                   type: Boolean, default: false
     field :otp_enabled_on,                  type: DateTime

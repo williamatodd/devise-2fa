@@ -19,12 +19,6 @@ build_config: &build_config
         key: v1-dependencies-{{ checksum "devise_2fa.gemspec" }}-{{ checksum "Appraisals" }}
 
     - run:
-        name: Setup Symmetric Encryption Config
-        command: |
-          cd spec/dummy/
-          symmetric-encryption -g
-
-    - run:
         name: Run Tests
         command: |
           mkdir /tmp/test-results
