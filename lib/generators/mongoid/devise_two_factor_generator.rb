@@ -13,8 +13,8 @@ module Mongoid
       def migration_data
 <<RUBY
   # Devise TwoFactor
-  field :encrypted_otp_auth_secret,       type: String, encrypted: true
-  field :encrypted_otp_recovery_secret,   type: String, encrypted: true
+  field :otp_auth_secret,                 type: String
+  field :otp_recovery_secret,             type: String
   field :otp_enabled,                     type: Boolean, default: false
   field :otp_mandatory,                   type: Boolean, default: false
   field :otp_enabled_on,                  type: DateTime
