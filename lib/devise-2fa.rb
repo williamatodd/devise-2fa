@@ -63,7 +63,7 @@ module Devise
   # the name of the token issuer
   #
   mattr_accessor :otp_issuer
-  @@otp_issuer = Rails.application.class.parent_name
+  @@otp_issuer = Rails.application.class.module_parent_name
 
   module TwoFactor
   end
