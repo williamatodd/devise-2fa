@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
-  gem.add_dependency "rails", ">= 4.1", "< 7.0"
+  gem.add_dependency "rails", ">= 4.1", "<= 7.0"
 
   gem.add_runtime_dependency 'devise', '~> 4.6'
   gem.add_runtime_dependency 'rotp', '~> 5.1'
